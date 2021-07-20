@@ -2,6 +2,9 @@ const express                   = require('express');
 const mongoose                  = require('mongoose');
 const morgan                    = require('morgan');
 
+
+const userRoutes                = require('./routes/auth/UserRoutes');
+
 const app                       = express();
 const port                      = 4000;
 
@@ -20,6 +23,9 @@ mongoose.connection.on('error', (err) => {
 // this is a logger
 app.use(morgan('dev'));
 
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Credentials', 'true');
     res.header('Access-Control-Allow-Origin', '*');
@@ -29,6 +35,8 @@ app.use((req, res, next) => {
   
     next();
 });
+
+app.use('/api', userRoutes);
 
 
 app.listen(port, () => { console.log(`Listening on port ${port}`)});
