@@ -2,10 +2,10 @@ const express                   = require('express');
 const mongoose                  = require('mongoose');
 const morgan                    = require('morgan');
 
-
-const userRoutes                = require('./routes/auth/UserRoutes');
-
 const app                       = express();
+
+const RootRouter                = require('./routes/auth/MainAuth');
+
 const port                      = 4000;
 
 require('dotenv').config();
@@ -36,7 +36,7 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use('/api', userRoutes);
+app.use('/api', RootRouter);
 
 
 app.listen(port, () => { console.log(`Listening on port ${port}`)});
